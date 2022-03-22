@@ -104,5 +104,6 @@ class TikCheck:
                 print(f"{Col.white}[{Col.green}+{Col.white}]{Col.green} {username} {Col.white} Is VALID !")
             sleep(0.2)
         input(f"\n{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Press Enter to Continue..")
+        self.__init__()
 # Dex is a request pro :P
 TikCheck()
