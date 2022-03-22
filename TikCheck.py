@@ -1,5 +1,5 @@
 # by Dextority & vesper#0003
-import requests, os
+import requests, os, random, string
 from pystyle import *
 from time import sleep
 headers = {'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image',
@@ -56,13 +56,15 @@ class TikCheck:
 ============================= {Col.white}TikCheck Console{Col.purple} ================================
 
 1- Check Username
-2- Check Multiple Usernames (.txt)
+2- Check Usernames in file
+3- Username Generator
         """)
         try:
             choice = int(input(f"{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Choice >> "))
         except:print(f"{Col.white}[{Col.red}+{Col.white}]{Col.red} Invalid Choice");sleep(2);self.__init__()
         if choice ==1:self.choice1()
         elif choice==2:self.choice2()
+        elif choice==3:self.choice3()
         else:print(f"{Col.white}[{Col.red}+{Col.white}]{Col.red} Invalid Choice");sleep(2);self.__init__()
     def choice1(self):
         username = input(f"{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Username >> ")
@@ -88,6 +90,19 @@ class TikCheck:
             input(f"\n{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Press Enter to Continue..")
         else:print(f"{Col.white}[{Col.red}+{Col.white}]{Col.red} Couldnt Find the file or invalid txt file.");sleep(2)
         self.__init__()
-
+    def choice3(self):
+        try:
+            numb = int(input(f"{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Number of characters >> "))
+            numb2 = int(input(f"{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Number of names to generate >> "))
+        except:print(f"{Col.white}[{Col.red}+{Col.white}]{Col.red} Invalid Number");sleep(2);self.choice3()
+        for _ in range(numb2):
+            username = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(numb))
+            r=requests.get(f'https://www.tiktok.com/@{username}', headers=headers)
+            if r.status_code==200:
+                print(f"{Col.white}[{Col.red}+{Col.white}]{Col.red} {username} {Col.white} Is INVALID!")
+            elif r.status_code == 404:
+                print(f"{Col.white}[{Col.green}+{Col.white}]{Col.green} {username} {Col.white} Is VALID !")
+            sleep(0.2)
+        input(f"\n{Col.white}[{Col.purple}+{Col.white}]{Col.purple} Press Enter to Continue..")
 # Dex is a request pro :P
 TikCheck()
